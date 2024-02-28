@@ -7,7 +7,7 @@
     "start:dev": "pnpm build && ts-node src/app/main.ts --watch",
     "start:debug": "pnpm start:dev --debug",
     "build": "tsc --project tsconfig.build.json",
-    "deploy": "liara deploy --app=\"jet-test-api\" --no-app-logs --platform=node",
+    "live": "liara deploy --app=\"jet-test-api\" --no-app-logs --platform=node",
     "lint": "eslint --ignore-path ./.gitignore .",
     "lint:fix": "pnpm lint --fix",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",

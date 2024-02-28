@@ -34,4 +34,4 @@ jobs:
         env:
           LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
         run: |
-          liara deploy --app="jet-test-api" --no-app-logs --platform=node --api-token="$LIARA_TOKEN" --port=3000
+          pnpm live --api-token="$LIARA_TOKEN" --port=3000
