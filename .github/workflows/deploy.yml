@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
 
       - name: Use PNPM ${{ vars.PNPM_VERSION }}
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
           version: ${{ vars.PNPM_VERSION }}
 
@@ -33,5 +33,6 @@ jobs:
       - name: Deploy to Liara
         env:
           LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
+          PORT: ${{ vars.PORT }}
         run: |
-          pnpm live --api-token="$LIARA_TOKEN" --port=3000
+          pnpm live --api-token="$LIARA_TOKEN" --port="$PORT"

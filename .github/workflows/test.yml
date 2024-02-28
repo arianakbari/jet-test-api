@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
 
       - name: Use PNPM ${{ vars.PNPM_VERSION }}
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
           version: ${{ vars.PNPM_VERSION }}
 
