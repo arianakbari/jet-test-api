@@ -38,8 +38,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        - PORT=${PORT:-3000}
     restart: unless-stopped
     env_file:
       - .env
@@ -47,13 +45,13 @@ services:
       # App
       APP_VERSION: docker-compose
       # Database
-      DB_HOST: ${DB_HOST:-postgres}
-      DB_PORT: ${DB_HOST:-5432}
+      DB_HOST: postgres
+      DB_PORT: ${DB_PORT:-5432}
       DB_NAME: ${DB_NAME:-jet-test}
-      DB_USERNAME: ${DB_USERNAME:-postgres}
+      DB_USER: ${DB_USER:-postgres}
       DB_PASSWORD: ${DB_PASSWORD:-postgres}
       # Redis
-      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_HOST: redis
       REDIS_PORT: ${REDIS_PORT:-6379}
     depends_on:
       - postgres

@@ -3,8 +3,6 @@ FROM node:latest
 # Set the working directory in the container
 WORKDIR /app
 
-ARG PORT
-
 # Install pnpm
 RUN npm i --no-fund -g pnpm@latest
 
@@ -24,7 +22,7 @@ COPY . .
 RUN pnpm run build
 
 # Expose the port the app runs on
-EXPOSE PORT
+EXPOSE ${PORT}
 
 # Run the application
 CMD ["pnpm", "start"]

@@ -2,6 +2,7 @@ import "reflect-metadata";
 import "dotenv/config";
 import bodyParser from "body-parser";
 import morgan from "morgan";
+import cors from "cors";
 import { InversifyExpressServer } from "inversify-express-utils";
 
 import { container, asyncBindings, bindings } from "./configurations/ioc";
@@ -18,13 +19,15 @@ server.setConfig(async (app) => {
   container.load(bindings);
   await container.loadAsync(asyncBindings);
   // add body parser
-  app.set("trust proxy", 1);
   app.use(
     bodyParser.urlencoded({
       extended: true,
     }),
   );
   app.use(bodyParser.json());
+  app.set("trust proxy", 1);
+  // it is not a good practice to disable cors in real production app but for the purpose of this application it is totally okay
+  app.use(cors());
   app.use(morgan("tiny"));
 });
 
