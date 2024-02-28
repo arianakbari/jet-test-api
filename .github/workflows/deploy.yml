@@ -1,0 +1,37 @@
+name: Deploy
+
+on:
+  workflow_call:
+
+jobs:
+  deploy:
+    name: Deploy
+
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use PNPM ${{ vars.PNPM_VERSION }}
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ vars.PNPM_VERSION }}
+
+      - name: Use Node.js ${{ vars.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          cache: pnpm
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: pnpm i
+      # we can run any command or workflow from here to deploy our app in a real environment
+      - name: Deploy to Liara
+        env:
+          LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
+        run: |
+          liara deploy --app="jet-test-api" --no-app-logs --platform=node --api-token="$LIARA_TOKEN" --port=3000

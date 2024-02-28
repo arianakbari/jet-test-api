@@ -1,0 +1,71 @@
+services:
+  # ------------------------- Database -------------------------
+
+  postgres:
+    container_name: jet-test-postgres
+    image: postgres:15.3-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: jet-test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+    volumes:
+      - jet-test-postgres-data:/data/postgres
+    ports:
+      - 5432:5432
+    networks:
+      - jet-test-backend
+
+
+  # ------------------------- Redis -------------------------
+
+  redis:
+    container_name: jet-test-redis
+    image: redis:7.0.10-alpine
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    networks:
+      - jet-test-backend
+
+
+  # ------------------------- API -------------------------
+
+  jet-test-api:
+    container_name: jet-test-api
+    image: jet-test-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PORT=${PORT:-3000}
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # App
+      APP_VERSION: docker-compose
+      # Database
+      DB_HOST: ${DB_HOST:-postgres}
+      DB_PORT: ${DB_HOST:-5432}
+      DB_NAME: ${DB_NAME:-jet-test}
+      DB_USERNAME: ${DB_USERNAME:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      # Redis
+      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_PORT: ${REDIS_PORT:-6379}
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - ${PORT:-3000}:${PORT:-3000}
+    networks:
+      - jet-test-backend
+
+networks:
+  jet-test-backend:
+
+
+volumes:
+  jet-test-postgres-data:

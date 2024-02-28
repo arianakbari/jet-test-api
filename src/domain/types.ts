@@ -1,0 +1,17 @@
+export const TYPES = {
+  Config: Symbol.for("Config"),
+  Cache: Symbol.for("Cache"),
+  Redis: Symbol.for("Redis"),
+  NotificationService: Symbol.for("NotificationService"),
+  TokenService: Symbol.for("TokenService"),
+  ExtractUserMiddleware: Symbol.for("ExtractUserMiddleware"),
+  PlayerService: Symbol.for("PlayerService"),
+  PlayerDAO: Symbol.for("PlayerDAO"),
+  PlayerRepository: Symbol.for("PlayerRepository"),
+  GameService: Symbol.for("GameService"),
+  GameDAO: Symbol.for("GameDAO"),
+  GameRepository: Symbol.for("GameRepository"),
+  MoveService: Symbol.for("MoveService"),
+  MoveDAO: Symbol.for("MoveDAO"),
+  MoveRepository: Symbol.for("MoveRepository"),
+};

@@ -1,0 +1,45 @@
+name: Test
+
+on:
+  pull_request:
+  workflow_call:
+
+jobs:
+  test:
+    name: Test
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      actions: read
+
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use PNPM ${{ vars.PNPM_VERSION }}
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ vars.PNPM_VERSION }}
+
+      - name: Use Node.js ${{ vars.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          cache: pnpm
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Check code styles
+        run: pnpm lint
+
+      - name: Build the project
+        run: pnpm build
+
+      - name: Test the project
+        run: pnpm test
