@@ -8,7 +8,7 @@ export const ValidateBodyMiddleware = (schema: Joi.ObjectSchema) => {
       next();
     } catch (e) {
       return res.status(400).json({
-        error: e,
+        message: (e as Joi.ValidationError).details[0].message,
       });
     }
   };

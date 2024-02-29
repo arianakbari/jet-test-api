@@ -1,8 +1,17 @@
-import { Column, CreateDateColumn, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { IsInt, IsUUID } from "class-validator";
 import { type Player } from "./Player";
 import { type Game } from "./Game";
 
+@Entity()
 export class Move {
   @PrimaryGeneratedColumn("uuid")
   @IsUUID(4)

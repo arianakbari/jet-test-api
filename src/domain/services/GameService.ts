@@ -72,7 +72,7 @@ export class GameService implements IGameService {
     // allow player to play his turn and save his move
     game = await this.playTurn(game, player, choice);
     // check whether game is finished or not and save it
-    if (game.number === 1) {
+    if (game.number <= 1) {
       // set winner id and status of the game
       await this.gameDAO.finishGame(game.id, player.id);
       // reset both players active game
@@ -147,15 +147,18 @@ export class GameService implements IGameService {
     const game = await this.gameDAO.createNewGame(initialNumber);
     // set active game of player
     await this.playerService.setInProgressGameId(player.id, game.id);
+    // save it to cache
+    const gameSession: GameSession = {
+      id: game.id,
+      number: initialNumber,
+      currentTurnPlayerId: null,
+      players: [player],
+      status: GAME_STATUS.WAITING_FOR_PLAYER,
+    };
+    await this.cache.set(game.id, gameSession);
     // return game and user token
     return {
-      game: {
-        id: game.id,
-        number: initialNumber,
-        currentTurnPlayerId: null,
-        players: [player],
-        status: GAME_STATUS.WAITING_FOR_PLAYER,
-      },
+      game: gameSession,
       token: await this.tokenService.sign({ id: player.id, email: player.email }),
     };
   }

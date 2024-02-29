@@ -7,7 +7,6 @@ import {
 } from "#src/domain/entities/index.js";
 
 export const GlobalErrorHandler = (error: Error, req: Request, res: Response): Response => {
-  console.log(error, req, res);
   if (error instanceof PlayerNotFoundException) {
     return res.status(404).json({
       message: error.message,

@@ -6,7 +6,7 @@
     "start": "node dist/app/main.js",
     "start:dev": "pnpm build && ts-node src/app/main.ts --watch",
     "start:debug": "pnpm start:dev --debug",
-    "build": "tsc --project tsconfig.build.json",
+    "build": "tsc --build tsconfig.build.json --force",
     "live": "liara deploy --app=\"jet-test-api\" --no-app-logs --platform=node",
     "lint": "eslint --ignore-path ./.gitignore .",
     "lint:fix": "pnpm lint --fix",

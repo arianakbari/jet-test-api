@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { Repository } from "typeorm";
-import { AsyncContainerModule, Container, ContainerModule } from "inversify";
+import { Container, ContainerModule } from "inversify";
 import { Redis } from "ioredis";
 
 import { TYPES } from "#src/domain/types.js";
@@ -33,7 +33,7 @@ import { ExtractUserMiddleware } from "#src/app/middlewares/index.js";
 
 export const container = new Container();
 
-export const bindings = new ContainerModule((bind) => {
+const bindings = new ContainerModule((bind) => {
   bind<IConfig>(TYPES.Config).to(Config).inSingletonScope();
   bind<ICache>(TYPES.Cache).to(CacheService).inSingletonScope();
   bind<INotificationService>(TYPES.NotificationService).to(NotificationService).inSingletonScope();
@@ -45,9 +45,6 @@ export const bindings = new ContainerModule((bind) => {
   bind<IGameService>(TYPES.GameService).to(GameService).inSingletonScope();
   bind<IMoveDAO>(TYPES.MoveDAO).to(MoveDAO).inSingletonScope();
   bind<IMoveService>(TYPES.MoveService).to(MoveService).inSingletonScope();
-});
-
-export const asyncBindings = new AsyncContainerModule(async (bind) => {
   bind<Repository<Player>>(TYPES.PlayerRepository)
     .toDynamicValue(() => {
       return dataSource.getRepository(Player);
@@ -72,3 +69,5 @@ export const asyncBindings = new AsyncContainerModule(async (bind) => {
     })
     .inSingletonScope();
 });
+
+container.load(bindings);
