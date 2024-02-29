@@ -29,7 +29,7 @@ server.setConfig(async (app) => {
   app.use(bodyParser.json());
   app.set("trust proxy", 1);
   app.use(morgan("tiny"));
-  app.use("/", swaggerUi.serve, swaggerUi.setup(getSwaggerSpec(config)));
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(getSwaggerSpec(config)));
 });
 
 server.setErrorConfig((app) => {

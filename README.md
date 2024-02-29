@@ -17,5 +17,5 @@ This app also uses Github actions for CI/CD. There are simple workflows configur
 version of this [app](https://jet-test-api.liara.run). I developed a simple client using `Vue.js` located in this [repo](https://github.com/arianakbari/jet-test-client). This app uses
 Github Actions too and live version of it, is accessible [here](https://jet-test.liara.run).
 
-Also swagger API documentation is configured and accessible [here](https://jet-test-api.liara.run).
+Also swagger API documentation is configured and accessible [here](https://jet-test-api.liara.run/api-docs).
 
